@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "615527778629",
+    "project_id": "messageapp-1c161",
+    "storage_bucket": "messageapp-1c161.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615527778629:android:365fadacf084a54c79d62c",
+        "android_client_info": {
+          "package_name": "com.jangho.messagedev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTInWG8UyYqEiUy5YtxzNCTTBzqeh35LI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
