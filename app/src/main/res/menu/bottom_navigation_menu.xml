@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_message"
+        android:title="문자 보내기"
+        android:icon="@drawable/baseline_mail_24"/>
+
+    <item
+        android:id="@+id/navigation_result"
+        android:title="전송결과보기"
+        android:icon="@drawable/baseline_check_circle_outline_24"
+     />
+    <item
+        android:id="@+id/navigation_book"
+        android:title="주소록/그룹"
+        android:icon="@drawable/baseline_library_books_24"
+        />
+    <item
+        android:id="@+id/navigation_logout"
+        android:title="로그아웃"
+        android:icon="@drawable/baseline_logout_24"
+        />
+
+    <!-- 필요에 따라 더 많은 아이템 추가 가능 -->
+</menu>
