@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "615527778629",
+    "firebase_url": "https://messageapp-1c161-default-rtdb.firebaseio.com",
     "project_id": "messageapp-1c161",
     "storage_bucket": "messageapp-1c161.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615527778629:android:365fadacf084a54c79d62c",
+        "mobilesdk_app_id": "1:615527778629:android:b0e150181633cf7f79d62c",
         "android_client_info": {
-          "package_name": "com.jangho.messagedev"
+          "package_name": "com.jangho.mesagedev"
         }
       },
       "oauth_client": [],
