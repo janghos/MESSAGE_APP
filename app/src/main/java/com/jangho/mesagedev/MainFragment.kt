@@ -26,6 +26,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private var contentResolver: ContentResolver? = null
     private val PICK_FILE_REQUEST_CODE = 123
+    val menuItems = mutableListOf<String>()
     private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
@@ -46,7 +47,11 @@ class MainFragment : Fragment() {
         contentResolver = requireContext().contentResolver
         activity = requireActivity() as MainActivity
         val spinner = binding.spinnerMenu
-        val menuItems = mutableListOf<String>()
+
+        activity?.let {
+            it.visibleNavigation()
+        }
+
 
         for(i in 1..100) {
             activity?.let{
@@ -73,7 +78,7 @@ class MainFragment : Fragment() {
         }
 
         activity?.let {
-            binding.tvPoint.text = it.getSaveString("count")
+            binding.tvPoint.text = it.getSaveString("count") + " P"
         }
 
         binding.btnUpload.setOnClickListener {
@@ -134,8 +139,6 @@ class MainFragment : Fragment() {
             }
         }
         activity?.let {
-            val menuItems = mutableListOf<String>()
-
             for(i in 1..100) {
                 if(it.getStringList("그룹$i") == null) {
                     it.saveStringList("그룹$i", list)
@@ -143,13 +146,13 @@ class MainFragment : Fragment() {
 
                     menuItems.add("그룹$i")
 
+                    val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, menuItems)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    binding.spinnerMenu.adapter = adapter
+                    binding.spinnerMenu.setSelection(i-1)
                     break
                 }
             }
-
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, menuItems)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerMenu.adapter = adapter
         }
     }
 }
