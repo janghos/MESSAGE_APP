@@ -60,7 +60,7 @@ class LoginFragment : Fragment() {
                                 if (user?.pw == binding.etPw.text.toString()) {
                                     activity.saveString("id", user.id.toString())
                                     activity.saveString("pw", user.pw.toString())
-                                    activity.saveString("count", user.count.toString())
+//                                    activity.saveString("count", user.count.toString())
                                     activity.replaceFragment(MainFragment(),null)
                                     activity.visibleNavigation()
                                     return

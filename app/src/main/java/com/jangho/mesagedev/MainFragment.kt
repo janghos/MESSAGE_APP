@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
 
         for(i in 1..100) {
             activity?.let{
-                if(it.getStringList("그룹$i") == null) {
+                if(it.getStringList("그룹$i") != null) {
                     menuItems.add("그룹$i")
                 }
             }
@@ -64,12 +64,16 @@ class MainFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 // 선택된 메뉴 항목 처리
-                displayContactsForGroup("그룹1")
+                displayContactsForGroup("그룹$position")
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
                 // 아무것도 선택되지 않았을 때의 처리
             }
+        }
+
+        activity?.let {
+            binding.tvPoint.text = it.getSaveString("count")
         }
 
         binding.btnUpload.setOnClickListener {
@@ -78,15 +82,20 @@ class MainFragment : Fragment() {
             intent.type = "*/*" // 모든 파일 유형 허용
             getContent.launch(intent)
         }
+        displayContactsForGroup("그룹1")
+
 
         return binding.root
     }
     private fun displayContactsForGroup(groupName: String) {
         // 선택된 그룹에 속하는 연락처 목록을 가져와서 RecyclerView에 표시
         activity?.let {
-            val adapter = ContactsAdapter(it.getStringList(groupName))
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            it.getStringList(groupName)?.let{ group ->
+                val adapter = ContactsAdapter(group)
+                binding.recyclerView.adapter = adapter
+                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            }
+
         }
 
     }
@@ -125,26 +134,22 @@ class MainFragment : Fragment() {
             }
         }
         activity?.let {
-            it.saveStringList("그룹1", list)
-//
-//            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, list)
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            binding.spinnerMenu.adapter = adapter
-            displayContactsForGroup("그룹1")
+            val menuItems = mutableListOf<String>()
+
             for(i in 1..100) {
-//                if(it.getStringList("그룹$i").isEmpty()) {
-//                    it.saveStringList("그룹$i", list)
-//                    for(i in 1..100) {
-//                        activity?.let{
-//                            if(it.getStringList("그룹$i") == null) {
-//                                list.add("그룹$i")
-//                            }
-//                        }
-//                    }
-//
-//                }
+                if(it.getStringList("그룹$i") == null) {
+                    it.saveStringList("그룹$i", list)
+                    displayContactsForGroup("그룹$i")
+
+                    menuItems.add("그룹$i")
+
+                    break
+                }
             }
 
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, menuItems)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerMenu.adapter = adapter
         }
     }
 }

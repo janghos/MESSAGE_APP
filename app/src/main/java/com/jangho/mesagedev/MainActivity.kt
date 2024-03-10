@@ -76,6 +76,14 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        if(getSaveString("count") != "") {
+            saveString("count", "500")
+        }
+
+    }
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
@@ -123,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         editor.putString(key,value)
     }
 
-    fun getString(key: String) : String? {
+    fun getSaveString(key: String) : String? {
         return sharedPreference.getString(key, "")
     }
 
@@ -134,8 +142,12 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    fun getStringList(key: String): List<String> {
-        val valueString = sharedPreference.getString(key, "") ?: ""
+    fun getStringList(key: String): List<String>? {
+        val valueString = sharedPreference.getString(key, null)
+
+        if (valueString == null || valueString == "NODATA") {
+            return null
+        }
         return valueString.split("\n").map { it.trim() }
     }
 }
