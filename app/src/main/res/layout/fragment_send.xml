@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="20dp"
+    tools:context=".SendFragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문자 전송"
+        android:textColor="@color/blue"
+        android:layout_margin="10dp"
+        android:textSize="30dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/et_send_text"
+        android:background="@drawable/btn_black_background"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:hint="보낼 내용을 입력하세요"
+        android:padding="10dp" />
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="동영상 첨부"
+            android:textSize="19dp"
+            android:background="@drawable/btn_redd_background"/>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_writer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="고객명"
+            android:textSize="19dp"
+            android:background="@drawable/btn_redd_background"/>
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="문자 발송하기"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_orange_background"/>
+
+
+</LinearLayout>
+</layout>

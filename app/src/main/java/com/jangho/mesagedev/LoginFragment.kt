@@ -38,6 +38,8 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        activity.bottomNavigation().visibility = View.GONE
+
         binding.etPw.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // 엔터 눌렀을 때 포커스를 다음 EditText로 이동
@@ -59,10 +61,7 @@ class LoginFragment : Fragment() {
                                 val user = userSnapshot.getValue(User::class.java) // User is a data class representing your user structure
                                 if (user?.pw == binding.etPw.text.toString()) {
                                     activity.saveString("id", user.id.toString())
-                                    activity.saveString("pw", user.pw.toString())
-//                                    activity.saveString("count", user.count.toString())
                                     activity.replaceFragment(MainFragment(),null)
-                                    activity.visibleNavigation()
                                     return
                                 }else{
                                     Toast.makeText(requireActivity(), "아이디 및 비밀번호 확인", Toast.LENGTH_LONG).show()
