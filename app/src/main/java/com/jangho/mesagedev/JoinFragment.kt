@@ -46,7 +46,7 @@ class JoinFragment : Fragment() {
         val user = hashMapOf(
             "id" to id,
             "pw" to pw,
-            "count" to 10000
+            "count" to 500
         )
 
         activity?.returnFirebase()?.reference?.child("users")?.child(id)?.setValue(user)

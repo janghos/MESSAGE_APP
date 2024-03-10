@@ -1,5 +1,6 @@
 package com.jangho.mesagedev
 
+import MainFragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -37,53 +38,70 @@ class MainActivity : AppCompatActivity() {
             // Log the exception for debugging
             Log.e("Firebase", "Firebase initialization error", e)
         }
-        sharedPreference = getSharedPreferences("message_pref", MODE_PRIVATE)
+        sharedPreference = getSharedPreferences("message_pref", 0)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, LoginFragment())
-            .addToBackStack(null) // 백 스택에 추가하여 뒤로가기를 지원
-            .commit()
-        false
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (getSaveString("id") != "") {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, MainFragment())
+                    .commit()
+                false
 
-        binding.bottomNavigationView.visibility = View.GONE
+                binding.bottomNavigationView.visibility = View.VISIBLE
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, LoginFragment())
+                    .addToBackStack(null) // 백 스택에 추가하여 뒤로가기를 지원
+                    .commit()
+                false
+
+                binding.bottomNavigationView.visibility = View.GONE
+            }
+            binding.tvSplashTitle.visibility = View.GONE
+            binding.progressbar.visibility = View.GONE
+        },2000)
+
+
+
 
         binding.bottomNavigationView.setOnItemSelectedListener {
                 when(it.itemId){
                     R.id.navigation_message -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainer, LoginFragment())
-                            .addToBackStack(null) // 백 스택에 추가하여 뒤로가기를 지원
-                            .commit()
+                       replaceFragment(SendMessageFragment(),null)
                         false
                     }
                     R.id.navigation_result -> {
                         false
                     }
                 R.id.navigation_book -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, MainFragment())
+                        .commit()
+
                     false
                 }
                 R.id.navigation_logout -> {
+                    saveString("id", "")
+                    saveString("pw", "")
+                    replaceFragment(LoginFragment(), null)
+                    binding.bottomNavigationView.visibility = View.GONE
                     false
                 }
                 else -> {
+
+
                     false
                 }
-
             }
         }
+        val dailyPreferenceManager = DailyPrefManager(this)
 
-
-
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if(getSaveString("count") != "") {
+        if(dailyPreferenceManager.resetDailyValue() || getSaveString("app_first") == null){
+            saveString("app_first", "true")
             saveString("count", "500")
         }
-
     }
+
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
@@ -127,12 +145,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveString(key : String, value : String){
-        val editor  : SharedPreferences.Editor = sharedPreference.edit()
-        editor.putString(key,value)
+        sharedPreference.edit().putString(key,value).apply()
     }
 
     fun getSaveString(key: String) : String? {
-        return sharedPreference.getString(key, "")
+        return sharedPreference.getString(key, "").toString()
     }
 
     fun saveStringList(key: String, valueList: List<String>) {
@@ -150,4 +167,9 @@ class MainActivity : AppCompatActivity() {
         }
         return valueString.split("\n").map { it.trim() }
     }
+
+    fun bottomNavigation() : View{
+        return binding.bottomNavigationView
+    }
+
 }
