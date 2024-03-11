@@ -69,7 +69,7 @@ class MainFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 // 선택된 메뉴 항목 처리
-                displayContactsForGroup("그룹$position")
+                displayContactsForGroup("그룹${position+1}")
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -109,13 +109,15 @@ class MainFragment : Fragment() {
             val inputStream: InputStream? = contentResolver?.openInputStream(uri)
             if (inputStream != null) {
                 // InputStream에서 데이터를 읽어와서 문자열로 변환
-                val content = inputStream.bufferedReader().use { it.readText() }
+                var content = inputStream.bufferedReader().use { it.readText() }
 
                 // 읽어온 데이터를 처리하는 메서드 호출
                 processFileContent(content)
 
                 // 반드시 파일 스트림을 닫아야 합니다.
                 inputStream.close()
+
+                content = ""
             }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
@@ -142,14 +144,14 @@ class MainFragment : Fragment() {
             for(i in 1..100) {
                 if(it.getStringList("그룹$i") == null) {
                     it.saveStringList("그룹$i", list)
-                    displayContactsForGroup("그룹$i")
-
                     menuItems.add("그룹$i")
-
                     val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, menuItems)
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     binding.spinnerMenu.adapter = adapter
+                    adapter.notifyDataSetChanged()
                     binding.spinnerMenu.setSelection(i-1)
+
+                    displayContactsForGroup("그룹$i")
                     break
                 }
             }
