@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                         false
                     }
                     R.id.navigation_result -> {
+                        Toast.makeText(this, "2차 출시 예정입니다.", Toast.LENGTH_SHORT).show()
                         false
                     }
                 R.id.navigation_book -> {

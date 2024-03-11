@@ -44,11 +44,11 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         app:labelVisibilityMode="labeled"
+            app:itemActiveIndicatorStyle="@null"
         android:layout_height="80dp"
         android:visibility="gone"
-        app:itemIconTint="@color/bottom_navigation_color"
-        app:itemTextColor="@color/bottom_navigation_color"
-        app:itemBackground="@null"
+        app:itemIconTint="@color/red"
+        app:itemTextColor="@color/red"
         app:menu="@menu/bottom_navigation_menu" />
 </LinearLayout>
     </layout>
