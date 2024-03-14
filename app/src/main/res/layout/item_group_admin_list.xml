@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tv_list_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/red"
+        android:text="Sample Text"
+        android:textStyle="bold"
+        android:textSize="16dp" />
+
+    <ToggleButton
+        android:layout_marginLeft="5dp"
+        android:id="@+id/tb_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/btn_redd_background"
+        android:text="삭제"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_admin"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  [관리자]"/>
+</LinearLayout>

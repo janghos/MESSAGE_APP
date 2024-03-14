@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -71,7 +72,10 @@ class MainActivity : AppCompatActivity() {
                         false
                     }
                     R.id.navigation_result -> {
-                        Toast.makeText(this, "2차 출시 예정입니다.", Toast.LENGTH_SHORT).show()
+                        val phoneNumber = "tel:02-546-7113"
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.data = Uri.parse(phoneNumber)
+                        startActivity(intent)
                         false
                     }
                 R.id.navigation_book -> {
@@ -99,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         if(dailyPreferenceManager.resetDailyValue() || getSaveString("app_first") == null){
             saveString("app_first", "true")
-            saveString("count", "500")
+            saveString("count", "10000")
         }
     }
 

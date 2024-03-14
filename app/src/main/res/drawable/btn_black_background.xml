@@ -5,7 +5,7 @@
 
     <!-- Red border color and width -->
     <stroke
-        android:width="2dp"
+        android:width="1dp"
         android:color="@color/black" />
 
     <!-- Corner radius, you can adjust this if needed -->

@@ -1,5 +1,6 @@
 import android.app.Activity
 import android.content.ContentResolver
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,11 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.jangho.mesagedev.AdminListAdapter
 import com.jangho.mesagedev.ContactsAdapter
+import com.jangho.mesagedev.LoginFragment
 import com.jangho.mesagedev.MainActivity
 import com.jangho.mesagedev.databinding.FragmentMainBinding
 import java.io.FileNotFoundException
@@ -38,6 +45,7 @@ class MainFragment : Fragment() {
     }
 
     private var activity : MainActivity ?= null
+    private var userList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +68,11 @@ class MainFragment : Fragment() {
                 }
             }
         }
+
+        activity?.let {
+            adminBtn(it)
+        }
+
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, menuItems)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -86,6 +99,13 @@ class MainFragment : Fragment() {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*" // 모든 파일 유형 허용
             getContent.launch(intent)
+        }
+
+        binding.btnAdmin.setOnClickListener {
+            if(binding.rvAdmin.visibility == View.GONE)
+                binding.rvAdmin.visibility = View.VISIBLE
+            else
+                binding.rvAdmin.visibility = View.GONE
         }
         displayContactsForGroup("그룹1")
 
@@ -156,5 +176,41 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun adminBtn(activity: MainActivity) {
+        activity.returnFirebase().getReference("users")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val userList = mutableListOf<LoginFragment.User>()
+
+                    for (userSnapshot in snapshot.children) {
+                        val user = userSnapshot.getValue(LoginFragment.User::class.java)
+                        user?.let {
+                            userList.add(it)
+                        }
+                    }
+
+                    // userList를 사용하여 필요한 작업을 수행합니다.
+                    // 예를 들어, RecyclerView 업데이트 등
+
+                    // 특정 ID의 경우 btnAdmin을 표시합니다.
+                    if (activity.getSaveString("id") == "01099997777" || activity.getSaveString("id") == "01076961588") {
+                        binding.btnAdmin.visibility = View.VISIBLE
+                    }
+
+                    // 나머지 작업들...
+                    binding.rvAdmin.adapter = AdminListAdapter(userList, activity)
+                    binding.rvAdmin.layoutManager = LinearLayoutManager(requireContext())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // 데이터 읽기가 취소된 경우
+                    Log.e(TAG, "onCancelled: ${error.message}")
+                }
+            })
+
+
+
     }
 }

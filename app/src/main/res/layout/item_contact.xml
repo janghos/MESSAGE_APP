@@ -2,14 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingVertical="20dp"
     android:gravity="center">
 
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_marginRight="15dp"
         android:text="dddd"
         android:textStyle="bold" />
@@ -19,6 +18,6 @@
         android:id="@+id/phoneNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
 
 </LinearLayout>

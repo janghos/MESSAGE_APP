@@ -26,6 +26,7 @@
     <EditText
         android:id="@+id/et_id"
         android:imeOptions="actionNext"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"

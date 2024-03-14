@@ -19,6 +19,7 @@
     <EditText
         android:id="@+id/et_id"
         android:imeOptions="actionNext"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
@@ -68,13 +69,12 @@
     <TextView
         android:id="@+id/tv_call"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
         android:background="@color/gray"
         android:textColor="@color/white"
-        android:layout_marginHorizontal="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:textSize="30dp"
         android:text="전화문의 : 02-546-7113"/>
 
 </LinearLayout>
