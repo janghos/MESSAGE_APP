@@ -56,12 +56,19 @@ class MainFragment : Fragment() {
         activity = requireActivity() as MainActivity
         val spinner = binding.spinnerMenu
 
+        binding.btnAdmin.setOnClickListener {
+            if(binding.rvAdmin.visibility == View.GONE)
+                binding.rvAdmin.visibility = View.VISIBLE
+            else
+                binding.rvAdmin.visibility = View.GONE
+        }
+
         activity?.let {
             it.visibleNavigation()
         }
 
 
-        for(i in 1..100) {
+        for(i in 1..1000) {
             activity?.let{
                 if(it.getStringList("그룹$i") != null) {
                     menuItems.add("그룹$i")
@@ -101,12 +108,7 @@ class MainFragment : Fragment() {
             getContent.launch(intent)
         }
 
-        binding.btnAdmin.setOnClickListener {
-            if(binding.rvAdmin.visibility == View.GONE)
-                binding.rvAdmin.visibility = View.VISIBLE
-            else
-                binding.rvAdmin.visibility = View.GONE
-        }
+
         displayContactsForGroup("그룹1")
 
 
@@ -119,6 +121,16 @@ class MainFragment : Fragment() {
                 val adapter = ContactsAdapter(group)
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            }
+
+            if(it.getStringList(groupName) == null) {
+                binding.noGroup.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                binding.spinnerMenu.visibility = View.GONE
+            }else {
+                binding.noGroup.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.spinnerMenu.visibility = View.VISIBLE
             }
 
         }
@@ -161,7 +173,7 @@ class MainFragment : Fragment() {
             }
         }
         activity?.let {
-            for(i in 1..100) {
+            for(i in 1..1000) {
                 if(it.getStringList("그룹$i") == null) {
                     it.saveStringList("그룹$i", list)
                     menuItems.add("그룹$i")
@@ -202,6 +214,7 @@ class MainFragment : Fragment() {
                     // 나머지 작업들...
                     binding.rvAdmin.adapter = AdminListAdapter(userList, activity)
                     binding.rvAdmin.layoutManager = LinearLayoutManager(requireContext())
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {

@@ -42,7 +42,7 @@ class SendMessageFragment : Fragment() {
         val selectedGroupList = ArrayList<String>()
 
         mainActivity?.let{
-        for(i in 1..100) {
+        for(i in 1..1000) {
             if(it.getStringList("그룹$i") != null){
                 groupList.add("그룹$i"+ " / ${it.getStringList("그룹$i")!!.size}명")
             }else {
